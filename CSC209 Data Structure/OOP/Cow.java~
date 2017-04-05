@@ -1,0 +1,6 @@
+public class Cow extends Animal{
+  public Cow(){
+   System.out.println("Cow"); 
+  }
+  
+}
