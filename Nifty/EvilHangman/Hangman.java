@@ -36,7 +36,7 @@ public class Hangman{
       throw new RuntimeException(e);
     }
     int i = 0; 
-    while(readdict.hasNext()) { // have next
+    while(readdict.hasNext()) { // while it have next
       String temp = readdict.nextLine();
       if(temp.length()==secretWordLength){
         word[i] = temp;
@@ -52,16 +52,16 @@ public class Hangman{
     readdict.close();
   }
   
-  public void play(){
+  public void play(){ // play method
     Scanner sc = new Scanner(System.in);
     
     isPlay = true;
     
     while(isPlay==true){
-      //checkLength = false;
-      
       while(checkLength==false){
+        System.out.println("----------------------------------------------------------------");
         System.out.println("Welcome to Evil Hangman !!!");
+        System.out.println("----------------------------------------------------------------");
         System.out.print("Enter word length :");
         int length = sc.nextInt();
         if(length > 1 && (length != 23 && length != 25 && length != 26 && length != 27) && length < 30){ //no length 1 23 25 26 27
@@ -75,35 +75,41 @@ public class Hangman{
         }
       }
       
-      if(guessCount==0){
-        System.out.println("LOSE !!");
-        System.out.println("Your word is : "+getSecretWord());
-        isPlay = false;
-        playAgain();
-        break;
-      }
-
-      String temp = dashLine.replaceAll(" ","");
-      if(temp.equals(getSecretWord())){
-        System.out.println("WIN !!");
-        System.out.println("Your word is : "+getSecretWord());
-        playAgain();
-        break;
-      } 
-      
-      while(guessCount>0){
+      while(guessCount>=0){
+        String temp = dashLine.replaceAll(" ","");
+        if(guessCount==0){
+          isPlay = false;
+          System.out.println("----------------------------------------------------------------");
+          System.out.println("LOSE !!");
+          System.out.println("Your word is : "+getSecretWord());
+          System.out.println("----------------------------------------------------------------");
+          playAgain();
+          break;
+        }
+        else if(temp.equals(getSecretWord())){
+          System.out.println("----------------------------------------------------------------");
+          System.out.println("WIN !!");
+          System.out.println("Your word is : "+getSecretWord());
+          System.out.println("----------------------------------------------------------------");
+          playAgain();
+          break;
+        } 
+        
+        System.out.println("----------------------------------------------------------------");
         System.out.println("Word length : "+secretWordLength);
         System.out.println("Word count : "+wordCount);
+        System.out.println("----------------------------------------------------------------");
         System.out.println("Word : "+displayDashline());
         System.out.println("Guess remaining : "+guessCount());
+        System.out.println("----------------------------------------------------------------");
         System.out.println("Letter that you already used :"+showLetterGuess());
+        System.out.println("----------------------------------------------------------------");
         System.out.println(getSecretWord());
-        //String temp = dashLine.replaceAll(" ","");
         System.out.println(temp);
         makeGuess(sc.next().charAt(0));
-        break;
+        
       }
-      break;
+      
     }
   }
   
@@ -185,6 +191,7 @@ public class Hangman{
     
     while(check==false){
       System.out.println("Do you want to play again ? // type y for yes,type n for no");
+      System.out.println("----------------------------------------------------------------");
       char input = sc.next().charAt(0);
       if(input=='y' || input=='Y'){
         check = true;
@@ -193,13 +200,18 @@ public class Hangman{
         break;
       }
       else if(input=='n' || input=='N'){ 
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Thank for playing !!");
+        System.out.println("----------------------------------------------------------------");
         isPlay = false;
         checkLength = true;
         check = true;
-        System.out.println("Thank for playing !!");
       }
       else {
+        System.out.println("----------------------------------------------------------------");
         System.out.println("Invalid input, Try again !!");
+        System.out.println("----------------------------------------------------------------");
+        check = false;
         playAgain();
       }
     }
