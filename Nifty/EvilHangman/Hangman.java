@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 public class Hangman{
   
   private String secretWord = "";
@@ -45,17 +46,14 @@ public class Hangman{
         wordCount++;
       }
     }
-    
     for(i = 0; i< secretWordLength; i++){
       dashLine += "_ ";
     }
-    
     readdict.close();
   }
   
   public void play(){ // play method
     Scanner sc = new Scanner(System.in);
-    
     isPlay = true;
     System.out.println("----------------------------------------------------------------");
     System.out.println("                  Welcome to Evil Hangman !!!                   ");
@@ -78,21 +76,19 @@ public class Hangman{
         
         System.out.print("Enter word length you want to play : ");
         int length = sc.nextInt();
-        if(length>1 && length<23 || length==24){ // no length 1 23 25 26 27
+        if(length>1 && length<23 || length==24 || length == 28 || length == 29){ 
           System.out.print("Enter number of your guess :");
           int count =  sc.nextInt();
           Hangman h = new Hangman(length,count);
           checkLength = true;
           h.play();
-        } else if(length == 1 || length == 23 || length == 25 || length == 26 || length == 27 || length < 30){
+        } else if(length == 1 || length == 23 || length == 25 || length == 26 || length == 27 || length>=30){
           System.out.println("Don't have word with that length. Please try again");
         }
         else{
           System.out.println("Invalid Input. Please try again");
         }
       }
-      
-      
       
       while(guessCount>=0){
         String temp = dashLine.replaceAll(" ","");
@@ -139,22 +135,22 @@ public class Hangman{
     guessResult = false;
     letterGuess = ch;
     checkHistory(letterGuess);
-    if(checkWord(letterGuess)){
+    if(checkWord(letterGuess)){ //if your word guess = false
       guessCount--;
       guessResult = false;
     }
-    else{
+    else{ // if word guess = true
       for(int i = 0; i < secretWord.length(); i++){
         if(secretWord.charAt(i) == ch){
           String temp = "";
           for(int j = 0; j < secretWord.length(); j++){
             if(secretWord.charAt(j) == ch)
             {
-              temp = temp + ch + " ";
+              temp = temp + ch + " "; // store the word that exists
             }
             else
             {
-              temp = temp + dashLine.charAt(2*j) + dashLine.charAt(2*j+1);              
+              temp = temp + dashLine.charAt(2*j) + dashLine.charAt(2*j+1); // store one to one with _ and space        
             }
           }
           dashLine = temp;
@@ -167,7 +163,7 @@ public class Hangman{
   }
   
   public boolean checkWord(char ch) {
-    int tempWordCount = 0;
+    int tempWordCount = 0;  // check word count from doesn't have input word
     for (int i = 0; i < wordCount; i++) {
       for (int j = 0; j < secretWordLength; j++) {
         if (word[i].charAt(j) == ch){ 
@@ -181,13 +177,13 @@ public class Hangman{
         }
       }
     }
-    String[] temp = new String[tempWordCount];
+    String[] temp = new String[tempWordCount]; // store word that doesn't have input to array
     int tempIndex = 0;
     for (int i = 0; i < wordCount; i++) {
       for (int j = 0; j < secretWordLength; j++) {
-        if (word[i].charAt(j) == ch) {
+        if (word[i].charAt(j) == ch) { 
           break;
-        } else {
+        } else { // input check with secretword and doesn't exists
           if (j == secretWordLength - 1) {
             if (word[i].charAt(j) != ch) {
               temp[tempIndex] = word[i];
@@ -197,7 +193,7 @@ public class Hangman{
         }
       }
     }
-    if(tempWordCount==0){
+    if(tempWordCount==0){ // input correct
       secretWord = word[0];
       return false;
     } else {
@@ -210,7 +206,6 @@ public class Hangman{
   
   public void playAgain(){
     Scanner sc = new Scanner(System.in);
-    
     while(check==false){
       System.out.println("                Do you want to play again ? (y/n)               ");
       System.out.println("----------------------------------------------------------------");
@@ -238,7 +233,6 @@ public class Hangman{
         playAgain();
       }
     }
-    
   }
   
   public void checkHistory(char ch){
