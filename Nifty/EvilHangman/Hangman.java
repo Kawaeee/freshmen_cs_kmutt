@@ -3,32 +3,35 @@ import java.io.*;
 
 public class Hangman{
   
-  private String secretWord = "";
-  private int guessCount;
-  private String dashLine = "";
-  private String letterGuessHistory = "";
-  private char letterGuess; //pointer
-  private String[] word = new String[127142]; //127142 words
-  private int wordCount = 0; //count only possible word that you choose the length
-  private int secretWordLength;
-  private boolean guessResult = false;
-  public boolean isPlay = true;
-  public static boolean checkLength = false;
-  public boolean check = false;
-  public boolean checkinput = false;
-  File dict = new File("dictionary.txt");
+  private String secretWord = ""; // our secret word that change every time user play a letter
+  private int guessCount; // number of guesses
+  private String dashLine = ""; // to show dashline like this _ _ _ _
+  private String letterGuessHistory = ""; // history of letter that you already guess
+  private char letterGuess; // pointer
+  private String[] word = new String[127142]; // 127142 words
+  private int wordCount = 0; // count only possible word that you choose the length
+  private int secretWordLength; // length of secret word
+  private boolean guessResult = false; 
+  public static boolean isPlay = true; // check that user play or not
+  public static boolean checkLength = false; // check length to loop input of length
+  public static boolean checkGuess = false;  // check length to loop input of guesses
+  public static boolean check = false;  // check to loop a games
+  File dict = new File("dictionary.txt"); // dictionary 
   
   public static void main(String [] args){
-    Scanner sc = new Scanner(System.in);
-    Hangman h = new Hangman();
-    h.play();
+    Scanner sc = new Scanner(System.in); // Scanner
+    Hangman h = new Hangman(); // created an object
+    h.play(); // play it
   }
   
   public Hangman(){ //created object 
-    
+    // nothing here
   }
   
-  public Hangman(int secretWordLength,int guessCount){
+  public Hangman(int secretWordLength,int guessCount){ // 2 parameters with length,count
+    check = false; // define 3 check
+    checkGuess = false; 
+    checkLength = false;
     this.guessCount = guessCount;
     this.secretWordLength = secretWordLength;
     Scanner readdict = null;
@@ -43,11 +46,11 @@ public class Hangman{
       if(temp.length()==secretWordLength){
         word[i] = temp;
         i++;
-        wordCount++;
+        wordCount++; // count a word
       }
     }
     for(i = 0; i< secretWordLength; i++){
-      dashLine += "_ ";
+      dashLine += "_ "; // created dash line _ _ _ _
     }
     readdict.close();
   }
@@ -73,40 +76,56 @@ public class Hangman{
     while(isPlay==true){
       
       while(checkLength==false){
-        
         System.out.print("Enter word length you want to play : ");
         int length = sc.nextInt();
-        if(length>1 && length<23 || length==24 || length == 28 || length == 29){ 
-          System.out.print("Enter number of your guess :");
-          int count =  sc.nextInt();
-          Hangman h = new Hangman(length,count);
-          checkLength = true;
-          h.play();
-        } else if(length == 1 || length == 23 || length == 25 || length == 26 || length == 27 || length>=30){
-          System.out.println("Don't have word with that length. Please try again");
+        if(length>1 && length<23 || length==24 || length == 28 || length == 29){ // 1-22 and not equal to 24 28 29
+          
+          while(checkGuess==false){
+            System.out.print("Enter number of your guess :");
+            int count =  sc.nextInt();
+            if(count>0 && count<=26){
+              Hangman h = new Hangman(length,count);
+              checkLength = true;
+              checkGuess = true;
+              h.play();
+            }
+            
+            else if(count==0 || count>26){
+              System.out.println("0 guess or more than 26 guess. NOT ALLOWED. Please try again");
+            }
+            else{
+              System.out.println("Invalid Input. Please try again");
+            }
+            
+          }
+        } else if(length == 1 || length == 23 || length == 25 || length == 26 || length == 27 || length>=30){ // not 1,23,25,26,27 and more than or equal to 30
+          System.out.println("We don't have word with that length. Please try again");
         }
         else{
           System.out.println("Invalid Input. Please try again");
         }
       }
       
-      while(guessCount>=0){
-        String temp = dashLine.replaceAll(" ","");
-        if(guessCount==0){
+      while(guessCount>=0){ // loop check and play
+        String temp = dashLine.replaceAll(" ",""); // check that our dashline -> secretword or not
+        if(guessCount==0){ // LOSE
           isPlay = false;
           if(check==false){
-            System.out.println("----------------------------------------------------------------");
-            System.out.println("SORRY YOU LOSE !!");
-            System.out.println("The secret word is : "+getSecretWord());
-            System.out.println("----------------------------------------------------------------");
+          System.out.println("----------------------------------------------------------------");
+          System.out.println("SORRY YOU LOSE !!");
+          System.out.println("The secret word is : "+getSecretWord());
+          System.out.println("----------------------------------------------------------------");
           }
+          playAgain();
           break;
         }
-        else if(temp.equals(getSecretWord())){
+        else if(temp.equals(getSecretWord())){ // WIN
           System.out.println("----------------------------------------------------------------");
           System.out.println("CONGRATULATIONS YOU WIN !!");
           System.out.println("The secret word is : "+getSecretWord());
           System.out.println("----------------------------------------------------------------");
+          check = false;
+          playAgain();
           break;
         } 
         
@@ -124,10 +143,6 @@ public class Hangman{
         System.out.print("Enter a letter to guess : ");
         makeGuess(sc.next().charAt(0));
       }
-      
-      playAgain();
-      break;
-      
     }
   }
   
@@ -204,7 +219,7 @@ public class Hangman{
     }
   }
   
-  public void playAgain(){
+  public void playAgain(){ // play again
     Scanner sc = new Scanner(System.in);
     while(check==false){
       System.out.println("                Do you want to play again ? (y/n)               ");
@@ -212,18 +227,20 @@ public class Hangman{
       char input = sc.next().charAt(0);
       if(input=='y' || input=='Y'){
         check = true;
+        checkGuess = false;
         checkLength = false;
         play();
-        //break;
+        break;
       }
       else if(input=='n' || input=='N'){ 
         System.out.println("----------------------------------------------------------------");
         System.out.println("                     Thank for playing !!                       ");
         System.out.println("----------------------------------------------------------------");
         isPlay = false;
+        checkGuess = true;
         checkLength = true;
         check = true;
-        //break;
+        break;
       }
       else {
         System.out.println("----------------------------------------------------------------");
@@ -239,7 +256,7 @@ public class Hangman{
     String temp = letterGuessHistory.replaceAll(" ","");
     for(int i = 0; i< temp.length(); i++){
       if(temp.charAt(i)==ch){
-        System.out.println("Please input again // Be careful if you always answer wrong but you know about it, it will decrease you guesscount");
+        System.out.println("Please input again // Be careful if you always answer wrong but you know about it, it will decrease your chance to guess");
         Scanner sc = new Scanner(System.in);
         makeGuess(sc.next().charAt(0));
       }
