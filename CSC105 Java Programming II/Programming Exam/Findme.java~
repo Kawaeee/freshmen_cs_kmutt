@@ -1,0 +1,24 @@
+import java.util.Scanner;
+public class Findme{
+  public static void main(String[] xSiri){
+    Scanner sc = new Scanner(System.in);
+    int cases = sc.nextInt();
+    int count = 0;
+    while(count<cases){
+    int size = sc.nextInt();
+    int arr [] = new int [size];
+    for(int i =0; i<arr.length; i++){
+      int input = sc.nextInt();
+      arr[i] = input;
+    }
+    int key = sc.nextInt();
+    int check;
+    for(int i =0; i<arr.length; i++){
+      if(key==arr[i]){
+        check++;
+      }
+    }
+    count++;
+    }
+    }
+}
