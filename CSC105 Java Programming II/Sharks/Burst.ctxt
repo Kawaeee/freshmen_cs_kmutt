@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Burst
+comment1.params=
+comment1.target=void\ act()
+comment2.params=fileName
+comment2.target=Burst(java.lang.String)
+numComments=3

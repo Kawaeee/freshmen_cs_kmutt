@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Buttons
+comment1.params=
+comment1.target=void\ act()
+comment2.params=fileName\ world
+comment2.target=Buttons(java.lang.String,\ java.lang.String)
+numComments=3

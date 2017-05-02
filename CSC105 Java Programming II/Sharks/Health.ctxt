@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=Health
+comment1.params=refText\ unitType\ initValue\ maxValue
+comment1.target=Health(java.lang.String,\ java.lang.String,\ int,\ int)
+comment1.text=\r\n\ Bar\ Constructor\:\ saves\ the\ initial\ values\ that\ are\ brought\ in\ and\ creates\ the\ bar\ image\ through\ the\ 'add(int)'\ call,\r\n\ which\ sets\ the\ initial\ value\ of\ the\ bar\ and\ calls\ the\ 'newImage'\ method\ to\ build\ and\ set\ a\ new\ image\ for\ the\ bar.\r\n\r\n\ @param\ 'refText'\:\ a\ text\ string\ to\ specify\ what\ the\ bar\ is\ for\ (be\ specific\ enough\ so\ that\ all\ bars\ can\ be\ distinguished\ one\ from\ another)\r\n\ @param\ 'unitType'\:\ a\ text\ string\ to\ specify\ what\ measure\ is\ being\ used\ in\ the\ bar\ ("percentage",\ "points",\ "frames\ per\ second",\ or\ whatever)\r\n\ @param\ 'initValue'\:\ the\ value\ the\ bar\ should\ be\ initially\ set\ to\r\n\ @param\ 'maxValue'\:\ the\ highest\ value\ the\ bar\ is\ allowed\ to\ hold\r\n
+comment2.params=
+comment2.target=void\ newImage()
+comment3.params=amount
+comment3.target=void\ add(int)
+comment4.params=amount
+comment4.target=void\ subtract(int)
+numComments=5

@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Puffers
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=Puffers()
+comment3.params=
+comment3.target=void\ moving()
+comment4.params=
+comment4.target=void\ eaten()
+numComments=5
